@@ -1,9 +1,12 @@
+import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
+import { useMutation } from 'react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { registerRestaurant } from '@/api/register-restaurant'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -22,16 +25,38 @@ export function SingUp() {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<SignUpForm>()
+  } = useForm<SignUpForm>({
+    defaultValues: {
+      email: 'testemail@testemail.com',
+      managerName: 'Carlos Sobral Teste',
+      phone: '(00) 000000000',
+      restaurantName: 'Bom de boca',
+    },
+  })
   const navigate = useNavigate()
 
-  async function handleSign(data: SignUpForm) {
-    toast.success('Restaurante cadastrado com sucesso!', {
-      action: {
-        label: 'Login',
-        onClick: () => navigate('/sign-in'),
-      },
-    })
+  const { mutateAsync: registerRestaurantFn } = useMutation({
+    mutationFn: registerRestaurant,
+  })
+
+  async function handleSign({
+    email,
+    managerName,
+    phone,
+    restaurantName,
+  }: SignUpForm) {
+    try {
+      await registerRestaurantFn({ email, managerName, phone, restaurantName })
+
+      toast.success('Restaurante cadastrado com sucesso!', {
+        action: {
+          label: 'Login',
+          onClick: () => navigate(`/sign-in?email=${email}`),
+        },
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
