@@ -1,4 +1,25 @@
 {
   "authenticate": [],
-  "restaurants": []
+  "restaurants": [],
+  "me": [
+    {
+      "id": "0",
+      "name": "Lucas",
+      "email": "primeiro@teste.com",
+      "phone": "(11) 960650552",
+      "role": "manager",
+      "createdAt": "Wed Feb 28 2024 23:30:17 GMT-0300 (Hora padrão de Brasília)",
+      "updatedAt": "Wed Feb 28 2024 23:30:17 GMT-0300 (Hora padrão de Brasília)"
+    }
+  ],
+  "managed-restaurant": [
+    {
+      "id": "0",
+      "name": "Bom de Boca",
+      "description": "Administrar o Bom de Boca",
+      "managerId": "0",
+      "createdAt": "Wed Feb 28 2024 23:30:17 GMT-0300 (Hora padrão de Brasília)",
+      "updatedAt": "Wed Feb 28 2024 23:30:17 GMT-0300 (Hora padrão de Brasília)"
+    }
+  ]
 }
