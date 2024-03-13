@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
@@ -27,10 +26,10 @@ export function SingUp() {
     formState: { isSubmitting },
   } = useForm<SignUpForm>({
     defaultValues: {
-      email: 'testemail@testemail.com',
-      managerName: 'Carlos Sobral Teste',
+      // email: 'testemail@testemail.com',
+      // managerName: 'Carlos Sobral Teste',
       phone: '(00) 000000000',
-      restaurantName: 'Bom de boca',
+      // restaurantName: 'Bom de boca',
     },
   })
   const navigate = useNavigate()

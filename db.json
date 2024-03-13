@@ -14,12 +14,12 @@
   ],
   "managed-restaurant": [
     {
-      "id": "0",
-      "name": "Bom de Boca",
-      "description": "Administrar o Bom de Boca",
       "managerId": "0",
       "createdAt": "Wed Feb 28 2024 23:30:17 GMT-0300 (Hora padrão de Brasília)",
-      "updatedAt": "Wed Feb 28 2024 23:30:17 GMT-0300 (Hora padrão de Brasília)"
+      "updatedAt": "Wed Feb 28 2024 23:30:17 GMT-0300 (Hora padrão de Brasília)",
+      "name": "Pizzaria Falcone",
+      "description": "Falcone Pizzaria a seu dispor",
+      "id": "0"
     }
   ]
 }

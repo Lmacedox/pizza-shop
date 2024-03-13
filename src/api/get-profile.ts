@@ -11,8 +11,6 @@ export interface GetProfileResponse {
 }
 
 export async function getProfile() {
-  2000
-
   const loggedId = sessionStorage.getItem('@logged-id')
   const { data } = await api.get<GetProfileResponse>(`/me/${loggedId}`)
 
