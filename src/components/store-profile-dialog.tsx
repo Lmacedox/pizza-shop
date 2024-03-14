@@ -8,7 +8,7 @@ import {
   getManagedRestaurant,
   GetManagedRestaurantResponse,
 } from '@/api/get-managed-restaurant'
-import { updateProfile } from '@/api/update-profile'
+import { updateProfile } from '@/api/profile'
 
 import { Button } from './ui/button'
 import {
@@ -48,6 +48,8 @@ export function StoreProfileDialog() {
       description: managedRestaurant?.description ?? '',
     },
   })
+
+  console.log('managedRestaurant', managedRestaurant)
 
   function updateManagedRestaurantCache({
     name,

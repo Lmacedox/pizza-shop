@@ -1,5 +1,7 @@
 import { api } from '@/lib/axios'
 
+import { createProfileWithManagedRestaurant } from './profile'
+
 export interface RegisterRestaurant {
   restaurantName: string
   managerName: string
@@ -13,5 +15,23 @@ export async function registerRestaurant({
   email,
   phone,
 }: RegisterRestaurant) {
-  await api.post('/restaurants', { restaurantName, managerName, email, phone })
+  const { data } = await api.post('/restaurants', {
+    restaurantName,
+    managerName,
+    email,
+    phone,
+  })
+
+  createProfileWithManagedRestaurant({
+    user: {
+      email: data.email,
+      name: data.managerName,
+      phone: data.phone,
+      role: 'manager',
+    },
+    managedRestaurant: {
+      name: data.restaurantName,
+      description: 'Administrar e cuidar do restaurante com amor!',
+    },
+  })
 }
