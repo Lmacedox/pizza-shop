@@ -1,25 +1,6 @@
 {
   "authenticate": [],
   "restaurants": [],
-  "me": [
-    {
-      "id": "0",
-      "name": "Lucas",
-      "email": "primeiro@teste.com",
-      "phone": "(11) 960650552",
-      "role": "manager",
-      "createdAt": "Wed Feb 28 2024 23:30:17 GMT-0300 (Hora padrão de Brasília)",
-      "updatedAt": "Wed Feb 28 2024 23:30:17 GMT-0300 (Hora padrão de Brasília)"
-    }
-  ],
-  "managed-restaurant": [
-    {
-      "managerId": "0",
-      "createdAt": "Wed Feb 28 2024 23:30:17 GMT-0300 (Hora padrão de Brasília)",
-      "updatedAt": "Wed Feb 28 2024 23:30:17 GMT-0300 (Hora padrão de Brasília)",
-      "name": "Pizzaria Falcone",
-      "description": "Falcone Pizzaria a seu dispor",
-      "id": "0"
-    }
-  ]
+  "me": [],
+  "managed-restaurant": []
 }
