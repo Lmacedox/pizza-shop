@@ -25,12 +25,7 @@ export function SingUp() {
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<SignUpForm>({
-    defaultValues: {
-      // email: 'testemail@testemail.com',
-      // managerName: 'Carlos Sobral Teste',
-      phone: '(00) 000000000',
-      // restaurantName: 'Bom de boca',
-    },
+    defaultValues: {},
   })
   const navigate = useNavigate()
 
