@@ -49,8 +49,6 @@ export function StoreProfileDialog() {
     },
   })
 
-  console.log('managedRestaurant', managedRestaurant)
-
   function updateManagedRestaurantCache({
     name,
     description,
