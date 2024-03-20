@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/select'
 
 const orderFiltersSchema = z.object({
-  orderId: z.string().optional(),
+  id: z.string().optional(),
   customerName: z.string().optional(),
   status: z.string().optional(),
 })
@@ -25,7 +25,7 @@ type OrderFiltersSchema = z.infer<typeof orderFiltersSchema>
 export function OrderTableFilters() {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const orderId = searchParams.get('orderId')
+  const id = searchParams.get('id')
   const customerName = searchParams.get('customerName')
   const status = searchParams.get('status')
 
@@ -33,18 +33,18 @@ export function OrderTableFilters() {
     useForm<OrderFiltersSchema>({
       resolver: zodResolver(orderFiltersSchema),
       defaultValues: {
-        orderId: orderId ?? '',
+        id: id ?? '',
         customerName: customerName ?? '',
         status: status ?? 'all',
       },
     })
 
-  function handleFilter({ customerName, orderId, status }: OrderFiltersSchema) {
+  function handleFilter({ customerName, id, status }: OrderFiltersSchema) {
     setSearchParams((state) => {
-      if (orderId) {
-        state.set('orderId', orderId)
+      if (id) {
+        state.set('id', id)
       } else {
-        state.delete('orderId')
+        state.delete('id')
       }
 
       if (customerName) {
@@ -67,7 +67,7 @@ export function OrderTableFilters() {
 
   function handleClearFilters() {
     setSearchParams((state) => {
-      state.delete('orderId')
+      state.delete('id')
       state.delete('customerName')
       state.delete('status')
       state.set('page', '1')
@@ -77,7 +77,7 @@ export function OrderTableFilters() {
 
     reset({
       customerName: '',
-      orderId: '',
+      id: '',
       status: 'all',
     })
   }
@@ -91,7 +91,7 @@ export function OrderTableFilters() {
       <Input
         placeholder="ID do pedido"
         className="h-8 w-auto"
-        {...register('orderId')}
+        {...register('id')}
       />
       <Input
         placeholder="Nome do cliente"

@@ -20,21 +20,21 @@ import {
 } from '@/components/ui/table'
 
 export interface OrderDetailsProps {
-  orderId: string
+  id: string
   open: boolean
 }
 
-export function OrderDetails({ orderId, open }: OrderDetailsProps) {
+export function OrderDetails({ id, open }: OrderDetailsProps) {
   const { data: order } = useQuery({
-    queryKey: ['order', orderId],
-    queryFn: () => getOrderDetails({ orderId }),
+    queryKey: ['order', id],
+    queryFn: () => getOrderDetails({ id }),
     enabled: open,
   })
 
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Pedido: {orderId}</DialogTitle>
+        <DialogTitle>Pedido: {id}</DialogTitle>
         <DialogDescription>Detalhes do pedido</DialogDescription>
       </DialogHeader>
       <div className="space-y-6">

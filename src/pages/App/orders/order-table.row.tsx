@@ -2,9 +2,10 @@ import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { ArrowRight, Search, X } from 'lucide-react'
 import { useState } from 'react'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 
 import { cancelOrder } from '@/api/cancel-order'
+import { GetOrdersResponse } from '@/api/get-orders'
 import { OrderStatus } from '@/components/order-status'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
@@ -14,7 +15,7 @@ import { OrderDetails } from './order-details'
 
 interface OrderTableRowProps {
   order: {
-    orderId: string
+    id: string
     createdAt: string
     status: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
     customerName: string
@@ -23,10 +24,34 @@ interface OrderTableRowProps {
 }
 
 export function OrderTableRow({
-  order: { customerName, createdAt, orderId, status, total },
+  order: { customerName, createdAt, id, status, total },
 }: OrderTableRowProps) {
+  const queryClient = useQueryClient()
+
   const { mutateAsync: cancelOrderFn } = useMutation({
     mutationFn: cancelOrder,
+    async onSuccess(_, { id }) {
+      const ordersListCache = queryClient.getQueriesData<GetOrdersResponse>({
+        queryKey: ['orders'],
+      })
+
+      ordersListCache.forEach(([cacheKey, cacheData]) => {
+        if (!cacheData) {
+          return
+        }
+
+        queryClient.setQueryData<GetOrdersResponse>(cacheKey, {
+          ...cacheData,
+          orders: cacheData.orders.map((order) => {
+            if (order.id === id) {
+              return { ...order, status: 'canceled' }
+            }
+
+            return order
+          }),
+        })
+      })
+    },
   })
 
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
@@ -41,10 +66,10 @@ export function OrderTableRow({
             </Button>
           </DialogTrigger>
 
-          <OrderDetails orderId={orderId} open={isDetailsOpen} />
+          <OrderDetails id={id} open={isDetailsOpen} />
         </Dialog>
       </TableCell>
-      <TableCell className="font-mono text-xs font-medium">{orderId}</TableCell>
+      <TableCell className="font-mono text-xs font-medium">{id}</TableCell>
       <TableCell className="text-muted-foreground">
         {formatDistanceToNow(new Date(createdAt), {
           addSuffix: true,
@@ -72,7 +97,7 @@ export function OrderTableRow({
           disabled={!['pending', 'processing'].includes(status)}
           variant="ghost"
           size="xs"
-          onClick={() => cancelOrderFn({ orderId: '65f8e29a3df69102799971c3' })}
+          onClick={() => cancelOrderFn({ id })}
         >
           <X className="mr-2 h-3 w-3" />
           Cancelar

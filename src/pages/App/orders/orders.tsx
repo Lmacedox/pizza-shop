@@ -19,7 +19,7 @@ import { OrderTableFilters } from './order-table-filters'
 export function Orders() {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const orderId = searchParams.get('orderId')
+  const id = searchParams.get('id')
   const customerName = searchParams.get('customerName')
   const status = searchParams.get('status')
 
@@ -29,8 +29,8 @@ export function Orders() {
     .parse(searchParams.get('page') ?? '1')
 
   const { data: result } = useQuery({
-    queryKey: ['orders', pageIndex, orderId, customerName, status],
-    queryFn: () => getOrders({ pageIndex, orderId, customerName, status }),
+    queryKey: ['orders', pageIndex, id, customerName, status],
+    queryFn: () => getOrders({ pageIndex, id, customerName, status }),
   })
 
   function handlePaginate(pageIndex: number) {
@@ -66,7 +66,7 @@ export function Orders() {
               <TableBody>
                 {result &&
                   result.orders.map((order) => (
-                    <OrderTableRow key={order.orderId} order={order} />
+                    <OrderTableRow key={order.id} order={order} />
                   ))}
               </TableBody>
             </Table>

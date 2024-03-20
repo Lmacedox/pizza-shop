@@ -2,14 +2,14 @@ import { api } from '@/lib/axios'
 
 export interface GetOrdersQuery {
   pageIndex?: number | null
-  orderId?: string | null
+  id?: string | null
   customerName?: string | null
   status?: string | null
 }
 
 export interface GetOrdersResponse {
   orders: {
-    orderId: string
+    id: string
     createdAt: string
     status: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
     customerName: string
@@ -30,7 +30,7 @@ interface ResponseObject {
   pages: number
   items: number
   data: {
-    orderId: string
+    id: string
     createdAt: string
     status: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
     customerName: string
@@ -41,16 +41,16 @@ interface ResponseObject {
 export async function getOrders({
   pageIndex,
   customerName,
-  orderId,
+  id,
   status,
 }: GetOrdersQuery) {
   let params = {}
 
-  if (orderId || customerName || status) {
-    if (orderId?.length) {
+  if (id || customerName || status) {
+    if (id?.length) {
       params = {
         ...params,
-        orderId,
+        id,
       }
     }
 
