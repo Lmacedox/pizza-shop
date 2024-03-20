@@ -1,5 +1,10 @@
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { ArrowRight, Search, X } from 'lucide-react'
+import { useState } from 'react'
+import { useMutation } from 'react-query'
 
+import { cancelOrder } from '@/api/cancel-order'
 import { OrderStatus } from '@/components/order-status'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
@@ -20,10 +25,15 @@ interface OrderTableRowProps {
 export function OrderTableRow({
   order: { customerName, createdAt, orderId, status, total },
 }: OrderTableRowProps) {
+  const { mutateAsync: cancelOrderFn } = useMutation({
+    mutationFn: cancelOrder,
+  })
+
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   return (
     <TableRow>
       <TableCell>
-        <Dialog>
+        <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
           <DialogTrigger asChild>
             <Button variant="outline" size="xs">
               <Search className="h-3 w-3" />
@@ -31,16 +41,26 @@ export function OrderTableRow({
             </Button>
           </DialogTrigger>
 
-          <OrderDetails />
+          <OrderDetails orderId={orderId} open={isDetailsOpen} />
         </Dialog>
       </TableCell>
       <TableCell className="font-mono text-xs font-medium">{orderId}</TableCell>
-      <TableCell className="text-muted-foreground">{createdAt}</TableCell>
+      <TableCell className="text-muted-foreground">
+        {formatDistanceToNow(new Date(createdAt), {
+          addSuffix: true,
+          locale: ptBR,
+        })}
+      </TableCell>
       <TableCell>
         <OrderStatus status={status} />
       </TableCell>
       <TableCell className="font-medium">{customerName}</TableCell>
-      <TableCell className="font-medium">{total}</TableCell>
+      <TableCell className="font-medium">
+        {total.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        })}
+      </TableCell>
       <TableCell>
         <Button variant="outline" size="xs">
           <ArrowRight className="mr-2 h-3 w-3" />
@@ -48,7 +68,12 @@ export function OrderTableRow({
         </Button>
       </TableCell>
       <TableCell>
-        <Button variant="ghost" size="xs">
+        <Button
+          disabled={!['pending', 'processing'].includes(status)}
+          variant="ghost"
+          size="xs"
+          onClick={() => cancelOrderFn({ orderId: '65f8e29a3df69102799971c3' })}
+        >
           <X className="mr-2 h-3 w-3" />
           Cancelar
         </Button>

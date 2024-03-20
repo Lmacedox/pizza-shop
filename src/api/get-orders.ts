@@ -69,13 +69,13 @@ export async function getOrders({
     }
   } else {
     params = {
-      _page: Number(pageIndex) + 1 ?? 1,
+      _page: Number(pageIndex) + 1,
       _per_page: 10,
     }
   }
 
   const { data } = await api.get<ResponseObject>('/orders', {
-    params: { ...params, _page: Number(pageIndex) + 1 ?? 1, _per_page: 10 },
+    params: { ...params, _page: Number(pageIndex) + 1, _per_page: 10 },
   })
 
   return {
