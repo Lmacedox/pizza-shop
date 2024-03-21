@@ -1,14 +1,9 @@
 import { twMerge } from 'tailwind-merge'
 
-type OrderStatus =
-  | 'pending'
-  | 'canceled'
-  | 'processing'
-  | 'delivering'
-  | 'delivered'
+import { TypeOrderStatus } from '@/@types/order-status'
 
 interface OrderStatusProps {
-  status: OrderStatus
+  status: TypeOrderStatus
 }
 
 interface StatusInfo {
@@ -16,7 +11,7 @@ interface StatusInfo {
   statusColor: string
 }
 
-const orderStatusMap: Record<OrderStatus, StatusInfo> = {
+const orderStatusMap: Record<TypeOrderStatus, StatusInfo> = {
   pending: { text: 'Pendente', statusColor: 'bg-slate-400' },
   canceled: { text: 'Cancelado', statusColor: 'bg-rose-500' },
   delivered: { text: 'Entregue', statusColor: 'bg-emerald-500' },
