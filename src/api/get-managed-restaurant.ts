@@ -10,10 +10,10 @@ export interface GetManagedRestaurantResponse {
 }
 
 export async function getManagedRestaurant() {
-  const loggedId = sessionStorage.getItem('@logged-id')
+  const getUserSession = sessionStorage.getItem('@logged-id')
 
   const { data } = await api.get<GetManagedRestaurantResponse[]>(
-    `/managed-restaurant?managerId=${loggedId}`,
+    `/managed-restaurant?managerId=${JSON.parse(getUserSession ?? '').userId}`,
   )
 
   return data[0]

@@ -16,7 +16,10 @@ export async function signIn({ email }: SignInBody) {
 
     if (user.email === email) {
       window.location.href = '/'
-      sessionStorage.setItem('@logged-id', user.id)
+      sessionStorage.setItem(
+        '@logged-id',
+        JSON.stringify({ userId: user.id, loginDate: new Date() }),
+      )
     } else {
       throw new Error('É isso')
     }

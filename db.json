@@ -953,5 +953,21 @@
       "customerName": "Virgie Wyatt",
       "total": 11
     }
-  ]
+  ],
+  "metrics-day-orders-amount": {
+    "amount": 59,
+    "diffFromYesterday": 1
+  },
+  "metrics-month-canceled-orders-amount": {
+    "amount": 12,
+    "diffFromLastMonth": 4
+  },
+  "metrics-month-receipt": {
+    "receipt": 75460,
+    "diffFromLastMonth": 9
+  },
+  "metrics-month-orders-amount": {
+    "amount": 45,
+    "diffFromLastMonth": 6
+  }
 }
